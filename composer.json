@@ -1,0 +1,12 @@
+{
+	"name": "landscapeinstitute/liod",
+	"type": "wordpress-plugin",   
+	"autoload": {
+        "psr-4": {
+            "liod\\core\\": "classes/core",
+            "liod\\custom_post_types\\": "classes/custom-post-types",	
+            "liod\\custom_product_types\\": "classes/custom-product-types",				
+            "liod\\helpers\\": "helpers"
+        }
+    }
+}
