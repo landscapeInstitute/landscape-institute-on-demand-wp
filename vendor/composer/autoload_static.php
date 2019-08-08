@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit03e1eb8a474eb6b7471da862c171ccab
+class ComposerStaticInit5267ce48ffc7be18be9cd4f304ef94b5
 {
     public static $files = array (
         '673d02b57df8f6d75b622cf6030bc00b' => __DIR__ . '/..' . '/landscapeinstitute/wp-github-plugin-updater/updater.php',
@@ -56,9 +56,9 @@ class ComposerStaticInit03e1eb8a474eb6b7471da862c171ccab
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit03e1eb8a474eb6b7471da862c171ccab::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit03e1eb8a474eb6b7471da862c171ccab::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit03e1eb8a474eb6b7471da862c171ccab::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit5267ce48ffc7be18be9cd4f304ef94b5::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit5267ce48ffc7be18be9cd4f304ef94b5::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit5267ce48ffc7be18be9cd4f304ef94b5::$classMap;
 
         }, null, ClassLoader::class);
     }
