@@ -4,8 +4,12 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit54a7ca6baf5d8b331f4e1ec22c74080e
+class ComposerStaticInit03e1eb8a474eb6b7471da862c171ccab
 {
+    public static $files = array (
+        '673d02b57df8f6d75b622cf6030bc00b' => __DIR__ . '/..' . '/landscapeinstitute/wp-github-plugin-updater/updater.php',
+    );
+
     public static $prefixLengthsPsr4 = array (
         'l' => 
         array (
@@ -35,11 +39,26 @@ class ComposerStaticInit54a7ca6baf5d8b331f4e1ec22c74080e
         ),
     );
 
+    public static $classMap = array (
+        'liod\\core\\core' => __DIR__ . '/../..' . '/classes/core/core.php',
+        'liod\\core\\event' => __DIR__ . '/../..' . '/classes/core/event.php',
+        'liod\\core\\post' => __DIR__ . '/../..' . '/classes/core/post.php',
+        'liod\\core\\video' => __DIR__ . '/../..' . '/classes/core/video.php',
+        'liod\\custom_post_types\\custom_post_type' => __DIR__ . '/../..' . '/classes/custom-post-types/custom-post-type.php',
+        'liod\\custom_post_types\\event' => __DIR__ . '/../..' . '/classes/custom-post-types/event.php',
+        'liod\\custom_post_types\\video' => __DIR__ . '/../..' . '/classes/custom-post-types/video.php',
+        'liod\\custom_product_types\\custom_product_type' => __DIR__ . '/../..' . '/classes/custom-product-types/product-type.php',
+        'liod\\custom_product_types\\event' => __DIR__ . '/../..' . '/classes/custom-product-types/event.php',
+        'liod\\custom_product_types\\subscription' => __DIR__ . '/../..' . '/classes/custom-product-types/subscription.php',
+        'liod\\helpers\\cmb2' => __DIR__ . '/../..' . '/helpers/cmb2.php',
+    );
+
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit54a7ca6baf5d8b331f4e1ec22c74080e::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit54a7ca6baf5d8b331f4e1ec22c74080e::$prefixDirsPsr4;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit03e1eb8a474eb6b7471da862c171ccab::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit03e1eb8a474eb6b7471da862c171ccab::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit03e1eb8a474eb6b7471da862c171ccab::$classMap;
 
         }, null, ClassLoader::class);
     }
