@@ -18,14 +18,12 @@ define('LIOD_ROOT',$_SERVER['DOCUMENT_ROOT']);
 define('LIOD_PLUGIN_PATH',plugin_dir_path(__FILE__));
 define('LIOD_CLASSES_PATH',LIOD_PLUGIN_PATH . 'classes/');
 
-/* Updater */
-
-require('updater.php');
+/* Include Composer */
+require(plugin_dir_path(__FILE__) . 'vendor/autoload.php');
 
 add_action('admin_init',function(){
 	new WP_GitHub_Updater(__FILE__);
 });
-
 
 /* CMB2 */
 require_once(LIOD_PLUGIN_PATH . 'cmb2.php');
