@@ -2,9 +2,9 @@
 
 ### Requirements
 - Woocommerce => 3.6.5
-- Compatable theme
+- Compatible theme
 
-### Recomended
+### Recommended
 To allow for MyLI oAuth Login and Authentication
 - MyLI WP 
 - MyLI WP Authentication
