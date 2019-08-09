@@ -41,7 +41,7 @@ class post /* Wrapper for WP_POST */
       $this->_id = null;
     } else if (is_int($post) || is_string($post)) {
       $this->_id = intval($post);
-    } else {
+	}else{
       $this->_id = $post->ID;
       $this->_post = $post;
     }

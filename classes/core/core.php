@@ -279,7 +279,7 @@ class core{
 		
 		$event_post = $this->get_all_event_posts( $event_id );
 		
-		return new \liod\core\event($event_post);
+		return new \liod\core\event(reset($event_post));
 		
 	}
 	
@@ -294,7 +294,7 @@ class core{
 		
 		$video_post = $this->get_all_video_posts( $video_id );
 		
-		return new \liod\core\video($video_post);
+		return new \liod\core\video(reset($video_post));
 		
 	}	
 	
@@ -543,7 +543,7 @@ class core{
 			
 			if(!empty($event->post_meta->liod_event_products)){
 				
-				foreach(explode(',',$event->post_meta->liod_event_products->meta_value), as $product_id){
+				foreach(explode(',',$event->post_meta->liod_event_products->meta_value) as $product_id){
 					
 					$products[] = wc_get_products(array('ID' => $product_id) );
 				}

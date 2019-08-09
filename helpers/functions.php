@@ -92,7 +92,7 @@ if(!function_exists('liod_get_the_event')){
 		global $wp_query;	
 		
 		if(liod_is_event()){
-			return liod()->core->get_event( get_the_ID() );
+			return liod()->get_event( get_the_ID() );
 		}
 						
 	}
@@ -109,7 +109,9 @@ if(!function_exists('liod_get_the_event_category')){
 		global $wp_query;	
 		
 		if(liod_is_event()){
-			return liod()->core->has_purchased_event( get_the_ID() );
+			foreach(get_the_terms(liod_get_the_event()->ID,'event_category') as $term){
+				return ($term->name);
+			}
 		}
 						
 	}
@@ -137,11 +139,43 @@ if(!function_exists('liod_get_the_event_topics')){
 		global $wp_query;	
 		
 		if(liod_is_event()){
-			return liod()->core->has_purchased_event( get_the_ID() );
+			$terms = array();
+
+			foreach(get_the_terms(liod_get_the_event()->ID,'event_topic') as $term){
+				$terms[] = ($term->name);
+			}
+			return $terms;
 		}
 						
 	}
 }
+
+
+/**
+ * Echo Current Event Topics as List
+ * 
+ * @return null
+ */	
+if(!function_exists('liod_the_event_topics')){
+	function liod_the_event_topics(){
+		
+		
+		if(liod_is_event()){
+			$terms = liod_get_the_event_topics();
+			
+			if(empty($terms))return;
+
+			foreach($terms as $term){
+				echo '
+				<li>
+					<a href="">' . $term . '</a>
+				</li>';
+			}
+		}				
+	}
+}
+
+
 
 /**
  * GET Current Event Payment Model
@@ -154,7 +188,7 @@ if(!function_exists('liod_get_the_event_payment_model')){
 		global $wp_query;	
 		
 		if(liod_is_event()){
-			return liod()->core->has_purchased_event( get_the_ID() );
+			return isset(liod_get_the_event()->postmeta->liod_event_payment_model) ? liod_get_the_event()->postmeta->liod_event_payment_model->meta_value : null;
 		}
 						
 	}
@@ -184,7 +218,7 @@ if(!function_exists('liod_get_the_event_type')){
 		global $wp_query;	
 		
 		if(liod_is_event()){
-			return liod()->core->has_purchased_event( get_the_ID() );
+			return isset(liod_get_the_event()->postmeta->liod_event_type) ? liod_get_the_event()->postmeta->liod_event_type->meta_value : null;
 		}
 						
 	}
@@ -213,7 +247,11 @@ if(!function_exists('liod_get_the_event_date')){
 		global $wp_query;	
 		
 		if(liod_is_event()){
-			return isset(liod_get_the_event()->liod_event_date) ? liod_get_the_event()->liod_event_date->meta_value : null;
+			if(isset(liod_get_the_event()->postmeta->liod_event_date)){
+				return date("d-m-Y", strtotime(liod_get_the_event()->postmeta->liod_event_date->meta_value));
+			}
+			
+			return null;
 		}
 						
 	}
@@ -226,7 +264,7 @@ if(!function_exists('liod_get_the_event_date')){
  */	
 if(!function_exists('liod_the_event_date')){
 	function liod_the_event_date(){
-		echo liod_get_the_event_type();				
+		echo liod_get_the_event_date();				
 	}
 }
 
@@ -242,7 +280,7 @@ if(!function_exists('liod_get_the_event_location')){
 		global $wp_query;	
 		
 		if(liod_is_event()){
-			return isset(liod_get_the_event()->liod_event_location) ? liod_get_the_event()->liod_event_location->meta_value : null;
+			return isset(liod_get_the_event()->postmeta->liod_event_location) ? liod_get_the_event()->postmeta->liod_event_location->meta_value : null;
 		}
 						
 	}
@@ -279,7 +317,7 @@ if(!function_exists('liod_event_is_free')){
 if(!function_exists('liod_event_has_videos')){
 	function liod_event_has_videos(){
 		if(liod_is_event()){
-			return !empty(liod()->core->get_all_videos( get_the_ID() )) ? true : false;		
+			return !empty(liod()->get_all_videos( get_the_ID() )) ? true : false;		
 		}		
 	}
 }
@@ -292,7 +330,7 @@ if(!function_exists('liod_event_has_videos')){
 if(!function_exists('liod_get_the_event_products')){
 	function liod_get_the_event_products(){
 		if(liod_is_event()){
-			return (liod()->core->get_products_from_event( get_the_ID() ));
+			return (liod()->get_products_from_event( get_the_ID() ));
 		}
 	}
 }
