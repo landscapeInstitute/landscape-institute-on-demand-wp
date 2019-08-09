@@ -526,5 +526,35 @@ class core{
 		
 	}
 	
+	/**
+	 * Get all event products as ARRAY of WC_PRODUCT from event_id
+	 *
+	 * @param event_id     $event_id to find product 
+	 * 
+	 * @return ARRAY WC_PRODUCT
+	 */	
+	public function get_products_from_event( $event_id ){
+		
+		
+		$events = $this->get_event( $event_id );
+		$products = [];
+		
+		foreach($events as $event){
+			
+			if(!empty($event->post_meta->liod_event_products)){
+				
+				foreach(explode(',',$event->post_meta->liod_event_products->meta_value), as $product_id){
+					
+					$products[] = wc_get_products(array('ID' => $product_id) );
+				}
+				
+			}
+			
+		}
+		
+		return $products;
+		
+	}	
+	
 }
 

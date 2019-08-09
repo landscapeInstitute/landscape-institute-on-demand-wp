@@ -283,3 +283,20 @@ if(!function_exists('liod_event_has_videos')){
 		}		
 	}
 }
+
+/**
+ * GET all products that could be purchased to give access to event
+ * 
+ * @return ARRAY of WC PRODUCTS
+ */	
+if(!function_exists('liod_get_the_event_products')){
+	function liod_get_the_event_products(){
+		if(liod_is_event()){
+			return (liod()->core->get_products_from_event( get_the_ID() ));
+		}
+	}
+}
+
+
+
+
