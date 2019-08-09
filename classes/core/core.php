@@ -264,7 +264,7 @@ class core{
 
 		}
 		
-		return $events;
+		return $videos;
 		
 	}	
 	
@@ -520,8 +520,8 @@ class core{
 		
 		$video = $this->get_video();
 		
-		if(!empty($event->post_meta->liod_video_event)){
-			return $this->get_event($video->post_meta->liod_video_event);
+		if(!empty($event->postmeta->liod_video_event)){
+			return $this->get_event($video->postmeta->liod_video_event);
 		}
 		
 	}
@@ -536,22 +536,16 @@ class core{
 	public function get_products_from_event( $event_id ){
 		
 		
-		$events = $this->get_event( $event_id );
+		$event = $this->get_event( $event_id );
 		$products = [];
-		
-		foreach($events as $event){
-			
-			if(!empty($event->post_meta->liod_event_products)){
+
+		if(!empty($event->postmeta->liod_event_products)){
+			foreach($event->postmeta->liod_event_products->meta_value as $product_id){
 				
-				foreach(explode(',',$event->post_meta->liod_event_products->meta_value) as $product_id){
-					
-					$products[] = wc_get_products(array('ID' => $product_id) );
-				}
-				
+				$products[] = wc_get_product($product_id);
 			}
-			
 		}
-		
+
 		return $products;
 		
 	}	

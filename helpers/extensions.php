@@ -46,6 +46,8 @@ if(!function_exists('get_posts_with_meta')) {
 
 	function get_posts_with_meta($args){
 		
+		global $wp_query;
+		
 		$wp_query = new \WP_Query( $args );
 		
 		if($wp_query->have_posts()) {
