@@ -11,7 +11,7 @@ class video extends \liod\custom_post_types\custom_post_type{
 		$this->post_type_display_name 			= 'Video';
 		$this->post_type_display_name_plural 	= "Videos";		
 
-		$this->post_type_enable_tags 			= true;
+		$this->post_type_enable_tags 			= false;
 		$this->post_type_enable_featured_image 	= false;	
 		$this->post_type_enable_content 		= false;	
 		$this->post_type_enable_title 			= false;		

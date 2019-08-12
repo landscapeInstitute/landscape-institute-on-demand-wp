@@ -41,20 +41,26 @@ if(!function_exists('add_query_meta')) {
 	}
 }
 
-/* Wrapper for WP Query and Above for getting all meta and posts */
+/* Wrapper for WP Query and Above for getting all meta and posts, see read me */
 if(!function_exists('get_posts_with_meta')) {	
 
 	function get_posts_with_meta($args){
 		
-		global $wp_query;
+		global $wp_preserve_query;
+		
+		if(!isset($wp_preserve_query) || $wp_preserve_query == false){
+			global $wp_query;
+			unset($wp_preserve_query);
+		}			
 		
 		$wp_query = new \WP_Query( $args );
 		
+	
 		if($wp_query->have_posts()) {
 			$wp_query = add_query_meta($wp_query);
 			return $wp_query->posts;
 		}
-		
+	
 	}
 
 }
@@ -126,4 +132,10 @@ if(!function_exists('wc_order_where_customer_bought_product')) {
 		return empty($result) ? false : $result[0];
 	}
 
+}
+
+if(!function_exists("wp_next_is_global")){
+
+
+	
 }

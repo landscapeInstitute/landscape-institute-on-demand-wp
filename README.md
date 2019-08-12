@@ -49,7 +49,7 @@ Subscriptions has an additional tab for specifying how long the subscription las
 
 Within post loops, generally inside a template on a singles page or archive page you can simple functions provided by wordpress to query the current POST. 
 In the same manner these functions can be used with WP Query loops. 
-For example in simular places where you could use 
+For example in similar places where you could use 
 
 `post_title()`
 `get_the_id()` 
@@ -73,5 +73,4 @@ For example in simular places where you could use
 | `liod_the_event_location` | None  | ECHO event location|
 | `liod_event_is_free` | BOOL | None |
 | `liod_event_has_videos` | BOOL | None
-
 

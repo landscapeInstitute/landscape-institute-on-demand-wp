@@ -4,7 +4,7 @@
 Plugin Name: Landscape Institute | On-Demand WP
 Plugin URI: https://github.com/landscapeInstitute/landscape-institute-on-demand-wp
 Description: Provide OnDemand services via events, videos, purchases and subscriptions
-Version: 2.0
+Version: 1.9
 Author: Louis Varley
 Author URI: http://www.landscapeinstitute.org
 */

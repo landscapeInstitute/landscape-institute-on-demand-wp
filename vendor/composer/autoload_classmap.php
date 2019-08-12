@@ -7,9 +7,6 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'liod\\core\\core' => $baseDir . '/classes/core/core.php',
-    'liod\\core\\event' => $baseDir . '/classes/core/event.php',
-    'liod\\core\\post' => $baseDir . '/classes/core/post.php',
-    'liod\\core\\video' => $baseDir . '/classes/core/video.php',
     'liod\\custom_post_types\\custom_post_type' => $baseDir . '/classes/custom-post-types/custom-post-type.php',
     'liod\\custom_post_types\\event' => $baseDir . '/classes/custom-post-types/event.php',
     'liod\\custom_post_types\\video' => $baseDir . '/classes/custom-post-types/video.php',

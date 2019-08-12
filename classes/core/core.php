@@ -123,34 +123,43 @@ class core{
 		
 	}
 	
+	
+
 	/**
-	 * Get all Events as WP_POSTS
+	 * Get all events as EVENT
 	 *
 	 * @param Arguments   $args An Optional WP Query Argument 
 	 * 
-	 * @return ARRAY WP_POSTS
+	 * @return ARRAY EVENTS
 	 */ 
-	private function get_all_event_posts( $args = null ){
-	
+	public function get_all_events( $args = array() ){
+		
 		$args = array (
 			'post_type' => $this->custom_post_types['event']->post_type,
 			'post_status' => 'publish',
 		);
 
-		$events = get_posts_with_meta($args);
+		$wp_query = new \WP_Query( $args );
 		
-		return $events;
+		foreach($wp_query->posts as $key => $event_post){
+			
+			if($this->has_purchased_event($event_post->ID)) $wp_query->posts[$key]->purchased = true;
+
+		}
+		
+		return $wp_query;
 		
 	}
-
+	
 	/**
-	 * Get all Videos as WP_POSTS
+	 * Get all events as VIDEOS
 	 *
+	 * @param Arguments   $event_id An Optional event_id 
 	 * @param Arguments   $args An Optional WP Query Argument 
 	 * 
-	 * @return ARRAY WP_POSTS
+	 * @return ARRAY VIDEOS
 	 */ 
-	private function get_all_video_posts( $event_id = null, $args = array() ){
+	public function get_all_videos( $event_id = null, $args = array() ){
 	
 		$args = array_merge($args, array (
 			'post_type' => $this->custom_post_types['video']->post_type,
@@ -172,99 +181,9 @@ class core{
 			);
 		}
 		
-		$videos = get_posts_with_meta($args);
+		$wp_query = new \WP_Query( $args );
 		
-		return $videos;
-		
-	}	
-	
-	/**
-	 * Get a single Event as WP_POST
-	 *
-	 * @param post_id    $post_id the event post
-	 * @param Arguments  $args An Optional WP Query Argument 
-	 * 
-	 * @return WP_POST
-	 */ 
-	private function get_event_post( $post_id, $args = array() ){
-	
-		$args = array_merge($args, array (
-			'p'				=> $post_id,
-			'post_type' 	=> $this->custom_post_types['event']->post_type,
-			'post_status' 	=> 'publish',
-		));
-
-		$events = get_posts_with_meta($args);
-		
-		return reset($events);
-		
-	}
-	
-	/**
-	 * Get a single Video as WP_POST
-	 *
-	 * @param post_id     $post_id for the video post	 
-	 * @param Arguments   $args An Optional WP Query Argument 
-	 * 
-	 * @return WP_POST
-	 */ 
-	private function get_video_post( $post_id, $args = array() ){
-	
-		$args = array_merge($args, array (
-			'p'				=> $post_id,
-			'post_type' 	=> $this->custom_post_types['video']->post_type,
-			'post_status' 	=> 'publish',
-		));
-
-		$videos = get_posts_with_meta($args);
-		
-		return reset($videos);
-		
-	}	
-	
-	/**
-	 * Get all events as EVENT
-	 *
-	 * @param Arguments   $args An Optional WP Query Argument 
-	 * 
-	 * @return ARRAY EVENTS
-	 */ 
-	public function get_all_events( $args = array() ){
-		
-		$event_posts = $this->get_all_event_posts();
-		$events = [];
-		
-		foreach($event_posts as $key => $event_post){
-			
-			if($this->has_purchased_event($event_post->ID)) $event_posts[$key]->purchased = true;
-			$events[] = new \liod\core\event($event_post);
-
-		}
-		
-		return $events;
-		
-	}
-	
-	/**
-	 * Get all events as VIDEOS
-	 *
-	 * @param Arguments   $event_id An Optional event_id 
-	 * @param Arguments   $args An Optional WP Query Argument 
-	 * 
-	 * @return ARRAY VIDEOS
-	 */ 
-	public function get_all_videos( $event_id = null, $args = array() ){
-		
-		$video_posts = $this->get_all_video_posts( $event_id, $args );
-		$videos = [];
-		
-		foreach($video_posts as $key => $video_post){
-			
-			$videos[] = new \liod\core\video($video_post);
-
-		}
-		
-		return $videos;
+		return $wp_query;
 		
 	}	
 	
@@ -273,13 +192,19 @@ class core{
 	 *
 	 * @param event_id     $event_id for the event	 
 	 * 
-	 * @return EVENT
+	 * @return WP_POST
 	 */
-	public function get_event( $event_id ){
+	public function get_event( $event_id, $args = array() ){
 		
-		$event_post = $this->get_all_event_posts( $event_id );
+		$args = array_merge($args, array (
+			'p'				=> $event_id,
+			'post_type' 	=> $this->custom_post_types['event']->post_type,
+			'post_status' 	=> 'publish',
+		));
+
+		$wp_query = new \WP_Query( $args );
 		
-		return new \liod\core\event(reset($event_post));
+		return reset($wp_query->posts);		
 		
 	}
 	
@@ -290,12 +215,18 @@ class core{
 	 * 
 	 * @return VIDEO
 	 */
-	public function get_video( $video_id ){
+	public function get_video( $video_id, $args = array() ){
 		
-		$video_post = $this->get_all_video_posts( $video_id );
+		$args = array_merge($args, array (
+			'p'				=> $video_id,
+			'post_type' 	=> $this->custom_post_types['video']->post_type,
+			'post_status' 	=> 'publish',
+		));
+
+		$wp_query = new \WP_Query( $args );
 		
-		return new \liod\core\video(reset($video_post));
-		
+		return reset($wp_query->posts);
+				
 	}	
 	
 	/**
@@ -499,13 +430,14 @@ class core{
 	public function has_purchased_event( $event_id, $user_id = null ){
 		
 		$purchased_events = $this->get_purchased_events( $user_id );
+		
+		if(empty($purchased_events)) return false;
 
 		foreach($purchased_events as $purchased_event){
 			if($purchased_event->ID == $event_id) return true;
 		}
 		
-		return false;
-		
+
 	}
 	
 	
@@ -520,8 +452,8 @@ class core{
 		
 		$video = $this->get_video();
 		
-		if(!empty($event->postmeta->liod_video_event)){
-			return $this->get_event($video->postmeta->liod_video_event);
+		if(!empty(get_post_meta($video_id, 'liod_video_event'))){
+			return $this->get_event(get_post_meta($video_id, 'liod_video_event', true));
 		}
 		
 	}
@@ -534,13 +466,12 @@ class core{
 	 * @return ARRAY WC_PRODUCT
 	 */	
 	public function get_products_from_event( $event_id ){
-		
-		
+				
 		$event = $this->get_event( $event_id );
 		$products = [];
 
-		if(!empty($event->postmeta->liod_event_products)){
-			foreach($event->postmeta->liod_event_products->meta_value as $product_id){
+		if(!empty(get_post_meta($event_id, 'liod_event_products')[0])){
+			foreach(get_post_meta($event_id, 'liod_event_products', true) as $product_id){
 				
 				$products[] = wc_get_product($product_id);
 			}
@@ -548,7 +479,7 @@ class core{
 
 		return $products;
 		
-	}	
+	}
 	
 }
 

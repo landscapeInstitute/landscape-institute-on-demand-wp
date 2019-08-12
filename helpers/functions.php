@@ -49,19 +49,62 @@ if(!function_exists('liod_is_event')){
  */	
 if(!function_exists('liod_is_video')){
 	function liod_is_video(){
-			
-		return get_post_type() == liod()->custom_post_types['video']->post_type;
 		
+		return get_post_type() == liod()->custom_post_types['video']->post_type;	
 	}
 }
 
 /**
- * Has User purchased the given video or event?
+ * GET event videos
+ * 
+ * @return WP_POST_QUERY
+ */	
+if(!function_exists('liod_get_event_videos')){
+	function liod_get_event_videos( $event_id = null ){
+
+		if(liod_is_event()){
+			return liod()->get_all_videos( get_the_ID() );		
+		}		
+	}
+}
+
+/**
+ * Current WP_QUERY Event
+ * 
+ * @return String
+ */	
+if(!function_exists('liod_get_the_event')){
+	function liod_get_the_event(){
+		
+		if(liod_is_event()){
+			return liod()->get_event( get_the_ID() );
+		}
+	}
+}
+
+/**
+ * Current WP_QUERY Video
+ * 
+ * @return String
+ */	
+if(!function_exists('liod_get_the_video')){
+	function liod_get_the_video(){
+
+		if(liod_is_video()){
+			
+			return liod()->get_video( get_the_ID() );
+		}
+						
+	}
+}
+
+/**
+ * Has User purchased the WP_QUERY video or event?
  * 
  * @return BOOL
  */	
-if(!function_exists('liod_event_is_purchased')){
-	function liod_event_is_purchased(){
+if(!function_exists('liod_has_purchased')){
+	function liod_has_purchased(){
 		
 		if(liod_is_event()){
 			return liod()->has_purchased_event( get_the_ID() );
@@ -72,21 +115,6 @@ if(!function_exists('liod_event_is_purchased')){
 			return liod()->has_purchased_event( $event_id );
 		}
 				
-	}
-}
-
-/**
- * Current Event
- * 
- * @return String
- */	
-if(!function_exists('liod_get_the_event')){
-	function liod_get_the_event(){
-		
-		if(liod_is_event()){
-			return liod()->get_event( get_the_ID() );
-		}
-						
 	}
 }
 
@@ -162,8 +190,6 @@ if(!function_exists('liod_the_event_topics')){
 	}
 }
 
-
-
 /**
  * GET Current Event Payment Model
  * 
@@ -171,11 +197,11 @@ if(!function_exists('liod_the_event_topics')){
  */	
 if(!function_exists('liod_get_the_event_payment_model')){
 	function liod_get_the_event_payment_model(){
-		
-		global $wp_query;	
-		
+	
 		if(liod_is_event()){
-			return isset(liod_get_the_event()->postmeta->liod_event_payment_model) ? liod_get_the_event()->postmeta->liod_event_payment_model->meta_value : null;
+			foreach(get_the_terms(liod_get_the_event()->ID,'event_payment_model') as $term){
+				return ($term->name);
+			}
 		}
 						
 	}
@@ -202,10 +228,11 @@ if(!function_exists('liod_the_event_payment_model')){
 if(!function_exists('liod_get_the_event_type')){
 	function liod_get_the_event_type(){
 		
-		global $wp_query;	
-		
+	
 		if(liod_is_event()){
-			return isset(liod_get_the_event()->postmeta->liod_event_type) ? liod_get_the_event()->postmeta->liod_event_type->meta_value : null;
+			foreach(get_the_terms(liod_get_the_event()->ID,'event_type') as $term){
+				return ($term->name);
+			}
 		}
 						
 	}
@@ -231,16 +258,14 @@ if(!function_exists('liod_the_event_type')){
 if(!function_exists('liod_get_the_event_date')){
 	function liod_get_the_event_date(){
 		
-		global $wp_query;	
-		
 		if(liod_is_event()){
-			if(isset(liod_get_the_event()->postmeta->liod_event_date)){
-				return date("d-m-Y", strtotime(liod_get_the_event()->postmeta->liod_event_date->meta_value));
+			if(get_post_meta(get_the_id(),'liod_event_date', true)){
+				
+				return date("d-m-Y", strtotime(get_post_meta(get_the_id(),'liod_event_date', true)));
 			}
 			
 			return null;
-		}
-						
+		}				
 	}
 }
 
@@ -264,10 +289,8 @@ if(!function_exists('liod_the_event_date')){
 if(!function_exists('liod_get_the_event_location')){
 	function liod_get_the_event_location(){
 		
-		global $wp_query;	
-		
 		if(liod_is_event()){
-			return isset(liod_get_the_event()->postmeta->liod_event_location) ? liod_get_the_event()->postmeta->liod_event_location->meta_value : null;
+			return get_post_meta(get_the_id(),'liod_event_location', true);
 		}
 						
 	}
@@ -309,16 +332,32 @@ if(!function_exists('liod_event_has_videos')){
 	}
 }
 
+
 /**
- * GET event videos
+ * GET Current Video Speaker
  * 
- * @return ARRAY VIDEO
+ * @return STRING
  */	
-if(!function_exists('liod_get_event_videos')){
-	function liod_get_event_videos( $event_id = null ){
-		if(liod_is_event()){
-			return liod()->get_all_videos( get_the_ID() );		
-		}		
+if(!function_exists('liod_get_video_speaker')){
+	function liod_get_video_speaker(){
+
+		if(liod_is_video()){
+			return get_post_meta(get_the_id(),'liod_video_speaker_name', true);
+		}
+						
+	}
+}
+
+/**
+ * ECHO current video speaker
+ * 
+ * @return NULL
+ */	
+if(!function_exists('liod_the_video_speaker')){
+	function liod_the_video_speaker(){
+		if(liod_is_video()){
+			echo liod_get_video_speaker();
+		}
 	}
 }
 
@@ -352,11 +391,8 @@ if(!function_exists('liod_event_has_multiple_products')){
 			return true;
 		}else{
 			return false;
-		}
-		
-		
-	}
-		
+		}	
+	}	
 }
 
 /**
@@ -378,7 +414,7 @@ if(!function_exists('liod_buy_buttons')){
 			echo '<a href="' . $product->get_permalink() . '">';
 			echo (isset($arr['before_title'])) ? $arr['before_title'] : '';			
 			echo (isset($arr['title'])) ? $arr['title'] : $product->get_name();	
-			echo (isset($arr['price'])) ? ' ' . get_woocommerce_currency_symbol() . $product->get_price() : '';				
+			echo (isset($arr['price']) && $arr['price']) ? ' ' . get_woocommerce_currency_symbol() . $product->get_price() : '';				
 			echo (isset($arr['after_title'])) ? $arr['after_title'] : '';				
 			echo '</a>';			
 			echo (isset($arr['after'])) ? $arr['after'] : '';	
@@ -387,6 +423,16 @@ if(!function_exists('liod_buy_buttons')){
 	}
 		
 }
+
+if(!function_exists('liod_similar_events')){
+	
+	function liod_similar_events(){
+		
+		return liod()->get_all_events();
+	}
+	
+}
+
 
 
 

@@ -11,7 +11,7 @@ class event extends \liod\custom_post_types\custom_post_type{
 		$this->post_type_display_name 			= 'Event';
 		$this->post_type_display_name_plural 	= "Events";
 		
-		$this->post_type_enable_tags 			= true;
+		$this->post_type_enable_tags 			= false;
 		$this->post_type_enable_featured_image 	= false;	
 		$this->post_type_enable_content 		= false;	
 		$this->post_type_enable_title 			= false;		
@@ -31,7 +31,7 @@ class event extends \liod\custom_post_types\custom_post_type{
 			'taxonomy'						=>	'event_topic',
 			'taxonomy_display_name'			=> 	'Event Topic',
 			'taxonomy_display_name_plural' 	=> 	'Event Topics',
-		));	
+		));		
 		
 		/* Event Payment Models */
 		$this->add_taxonomy('event_payment_model', array(

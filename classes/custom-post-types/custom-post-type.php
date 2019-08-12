@@ -84,9 +84,9 @@ class custom_post_type{
 		register_post_type( strtolower($this->post_type),
 			array(
 				'labels' => array(
-					'name' => __( ($this->post_type_display_name) ),
+					'name' => __( ($this->post_type_display_name_plural) ),
 					'singular_name' => __( ($this->post_type_display_name) ),
-					'add_new' => __( 'Add New ' . ($this->post_type_display_name) ),
+					'add_new' => __( 'Add New' ),
 					'add_new_item' => __( 'Add New ' . ($this->post_type_display_name) ),
 					'edit_item' => __( 'Edit ' . ($this->post_type_display_name) ),
 					'new_item' => __( 'Add New ' . ($this->post_type_display_name) ),

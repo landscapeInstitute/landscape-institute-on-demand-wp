@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit54b6ed734c2595e6c1b6375beec5dc95
+class ComposerStaticInitb7963911d01aa0272a9333d39fec2be5
 {
     public static $files = array (
         '673d02b57df8f6d75b622cf6030bc00b' => __DIR__ . '/..' . '/landscapeinstitute/wp-github-plugin-updater/updater.php',
@@ -41,9 +41,6 @@ class ComposerStaticInit54b6ed734c2595e6c1b6375beec5dc95
 
     public static $classMap = array (
         'liod\\core\\core' => __DIR__ . '/../..' . '/classes/core/core.php',
-        'liod\\core\\event' => __DIR__ . '/../..' . '/classes/core/event.php',
-        'liod\\core\\post' => __DIR__ . '/../..' . '/classes/core/post.php',
-        'liod\\core\\video' => __DIR__ . '/../..' . '/classes/core/video.php',
         'liod\\custom_post_types\\custom_post_type' => __DIR__ . '/../..' . '/classes/custom-post-types/custom-post-type.php',
         'liod\\custom_post_types\\event' => __DIR__ . '/../..' . '/classes/custom-post-types/event.php',
         'liod\\custom_post_types\\video' => __DIR__ . '/../..' . '/classes/custom-post-types/video.php',
@@ -56,9 +53,9 @@ class ComposerStaticInit54b6ed734c2595e6c1b6375beec5dc95
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit54b6ed734c2595e6c1b6375beec5dc95::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit54b6ed734c2595e6c1b6375beec5dc95::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit54b6ed734c2595e6c1b6375beec5dc95::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitb7963911d01aa0272a9333d39fec2be5::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitb7963911d01aa0272a9333d39fec2be5::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInitb7963911d01aa0272a9333d39fec2be5::$classMap;
 
         }, null, ClassLoader::class);
     }
